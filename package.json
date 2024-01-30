@@ -7,7 +7,9 @@
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
-    "compile": "hardhat compile"
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "lint": "yarn eslint . & solhint 'contracts/**/*.sol'"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
