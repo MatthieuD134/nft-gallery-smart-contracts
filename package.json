@@ -1,0 +1,40 @@
+{
+  "name": "nft-gallery-smart-contracts",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "https://github.com/MatthieuD134/nft-gallery-smart-contracts",
+  "author": "Matthieu Daulhiac <96766017+MatthieuD134@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "husky install",
+    "compile": "hardhat compile"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+    "@nomicfoundation/hardhat-toolbox-viem": "^2.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
+    "@nomicfoundation/hardhat-viem": "^1.0.0",
+    "@types/chai": "^4.2.0",
+    "@types/chai-as-promised": "^7.1.6",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.10",
+    "@typescript-eslint/eslint-plugin": "^6.20.0",
+    "@typescript-eslint/parser": "^6.20.0",
+    "chai": "^4.2.0",
+    "dotenv": "^16.4.1",
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "hardhat": "^2.19.4",
+    "hardhat-gas-reporter": "^1.0.8",
+    "husky": "^9.0.7",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.2.4",
+    "solidity-coverage": "^0.8.0",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.0.4",
+    "viem": "^1.15.1"
+  }
+}
