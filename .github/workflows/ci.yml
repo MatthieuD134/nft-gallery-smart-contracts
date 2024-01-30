@@ -28,15 +28,16 @@ jobs:
         permissions:
             security-events: write
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
 
             - name: Run static analysis with slither
               uses: crytic/slither-action@v0.3.0
               id: slither
               continue-on-error: true
               with:
+                node-version: 16
                 sarif: results.sarif
-                slither-args: --filter-patths node_modules
+                slither-args: --filter-paths node_modules
 
             - name: Upload static analysis SARIF output file
               uses: github/codeql-action/upload-sarif@v3
