@@ -1,6 +1,11 @@
 import { config as dotEnvConfig } from 'dotenv';
 import { HardhatUserConfig } from 'hardhat/config';
 import '@nomicfoundation/hardhat-toolbox-viem';
+import '@nomicfoundation/hardhat-verify';
+import '@nomicfoundation/hardhat-chai-matchers';
+import 'solidity-coverage';
+import 'hardhat-gas-reporter';
+import 'hardhat-contract-sizer';
 
 dotEnvConfig();
 
@@ -39,6 +44,13 @@ const config: HardhatUserConfig = {
   },
   mocha: {
     timeout: 40000,
+  },
+  gasReporter: {
+    enabled: true,
+  },
+  contractSizer: {
+    alphaSort: true,
+    runOnCompile: true,
   },
 };
 
