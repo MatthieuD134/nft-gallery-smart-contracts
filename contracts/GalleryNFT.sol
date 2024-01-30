@@ -53,6 +53,7 @@ contract GalleryNFT is ERC721A, Ownable {
         unchecked {
             uint256 end = _nextTokenId();
             uint256 index = end - amount;
+            _model[modelId].supply += amount;
             do {
                 _tokenModelId[index] = modelId;
                 index++;
