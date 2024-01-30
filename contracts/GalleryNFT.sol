@@ -24,12 +24,12 @@ contract GalleryNFT is ERC721A, Ownable {
      * @param modelMaxSupply The max supply for the new model
      * @param modelUri The metadata uri for all tokens minted using this model
      */
-    function setUpNFT(
+    function setUpModel(
         uint256 modelId,
         uint256 modelMaxSupply,
         string memory modelUri
     ) public onlyOwner {
-        require(!_modelExists(modelId), "Gallery: Model already exists");
+        require(_modelMissing(modelId), "Gallery: Model already exists");
         _model[modelId] = Model({maxSupply: modelMaxSupply, supply: 0, uri: modelUri});
     }
 
@@ -89,6 +89,16 @@ contract GalleryNFT is ERC721A, Ownable {
         return (modelId != 0 &&
             _model[modelId].maxSupply > 0 &&
             bytes(_model[modelId].uri).length > 0);
+    }
+
+    /**
+     * @dev A private method to check wether a specific model is missing (can be created)
+     * @param modelId The id of the model being checked
+     */
+    function _modelMissing(uint256 modelId) private view returns (bool) {
+        return (modelId != 0 &&
+            _model[modelId].maxSupply == 0 &&
+            bytes(_model[modelId].uri).length == 0);
     }
 
     /**
