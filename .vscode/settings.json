@@ -1,3 +1,9 @@
 {
-  "cSpell.words": ["sepolia", "solhint"]
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "cSpell.words": ["sepolia", "solhint"],
+  "[solidity]": {
+    "editor.defaultFormatter": "NomicFoundation.hardhat-solidity"
+  },
+  "solidity.compileUsingRemoteVersion": "v0.8.23+commit.f704f362"
 }

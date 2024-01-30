@@ -840,6 +840,11 @@
     "@nomicfoundation/solidity-analyzer-win32-ia32-msvc" "0.1.1"
     "@nomicfoundation/solidity-analyzer-win32-x64-msvc" "0.1.1"
 
+"@openzeppelin/contracts@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-5.0.1.tgz#93da90fc209a0a4ff09c1deb037fbb35e4020890"
+  integrity sha512-yQJaT5HDp9hYOOp4jTYxMsR02gdFZFXhewX5HW9Jo4fsqSVqqyIO/xTHdWDaKX5a3pv1txmf076Lziz+sO7L1w==
+
 "@pkgr/core@^0.1.0":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@pkgr/core/-/core-0.1.1.tgz#1ec17e2edbec25c8306d424ecfbf13c7de1aaa31"
@@ -865,6 +870,11 @@
     "@pnpm/config.env-replace" "^1.1.0"
     "@pnpm/network.ca-file" "^1.0.1"
     config-chain "^1.1.11"
+
+"@prettier/sync@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@prettier/sync/-/sync-0.3.0.tgz#91f2cfc23490a21586d1cf89c6f72157c000ca1e"
+  integrity sha512-3dcmCyAxIcxy036h1I7MQU/uEEBq8oLwf1CE3xeze+MPlgkdlb/+w6rGR/1dhp6Hqi17fRS6nvwnOzkESxEkOw==
 
 "@scure/base@~1.1.0", "@scure/base@~1.1.2", "@scure/base@~1.1.4":
   version "1.1.5"
@@ -1008,6 +1018,11 @@
   integrity sha512-PI9NfoA3P8XK2VBkK5oIfRgKDsicwDZfkVq9ZTBCQYGOP1N2owgY2dyLGyU5/J/hQs8KRk55kdmvTLjy3Mu3vg==
   dependencies:
     antlr4ts "^0.5.0-alpha.4"
+
+"@solidity-parser/parser@^0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@solidity-parser/parser/-/parser-0.17.0.tgz#52a2fcc97ff609f72011014e4c5b485ec52243ef"
+  integrity sha512-Nko8R0/kUo391jsEHHxrGM07QFdnPGvlmox4rmH0kNiNAashItAilhy4Mv4pK5gQmW5f4sXAF58fwJbmlkGcVw==
 
 "@solidity-parser/parser@^0.18.0":
   version "0.18.0"
@@ -2015,7 +2030,7 @@ command-exists@^1.2.8:
   resolved "https://registry.yarnpkg.com/command-exists/-/command-exists-1.2.9.tgz#c50725af3808c8ab0260fd60b01fbfa25b954f69"
   integrity sha512-LTQ/SGc+s0Xc0Fu5WaKnR0YiygZkm9eKFvyS+fRsU7/ZWFF8ykFM6Pc9aCVf1+xasOOZpO3BAVgVrKvsqKHV7w==
 
-commander@11.1.0:
+commander@11.1.0, commander@^11.1.0:
   version "11.1.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-11.1.0.tgz#62fdce76006a68e5c1ab3314dc92e800eb83d906"
   integrity sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==
@@ -2307,6 +2322,11 @@ env-paths@^2.2.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/env-paths/-/env-paths-2.2.1.tgz#420399d416ce1fbe9bc0a07c62fa68d67fd0f8f2"
   integrity sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==
+
+erc721a@^4.2.3:
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/erc721a/-/erc721a-4.2.3.tgz#ca6469b0e54afb0f614272c2147dc4cb49ff223f"
+  integrity sha512-0deF0hOOK1XI1Vxv3NKDh2E9sgzRlENuOoexjXRJIRfYCsLlqi9ejl2RF6Wcd9HfH0ldqC03wleQ2WDjxoOUvA==
 
 error-ex@^1.3.1:
   version "1.3.2"
@@ -4695,6 +4715,15 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
+prettier-plugin-solidity@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-solidity/-/prettier-plugin-solidity-1.3.1.tgz#59944d3155b249f7f234dee29f433524b9a4abcf"
+  integrity sha512-MN4OP5I2gHAzHZG1wcuJl0FsLS3c4Cc5494bbg+6oQWBPuEamjwDvmGfFMZ6NFzsh3Efd9UUxeT7ImgjNH4ozA==
+  dependencies:
+    "@solidity-parser/parser" "^0.17.0"
+    semver "^7.5.4"
+    solidity-comments-extractor "^0.0.8"
+
 prettier@^2.8.3:
   version "2.8.8"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.8.tgz#e8c5d7e98a4305ffe3de2e1fc4aca1a71c28b1da"
@@ -5238,6 +5267,39 @@ solc@0.7.3:
     semver "^5.5.0"
     tmp "0.0.33"
 
+solhint-community@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/solhint-community/-/solhint-community-3.7.0.tgz#5d8bd4a2137d44dd636272edce93cb754184c09b"
+  integrity sha512-8nfdaxVll+IIaEBHFz3CzagIZNNTGp4Mrr+6O4m7c9Bs/L8OcgR/xzZJFwROkGAhV8Nbiv4gqJ42nEXZPYl3Qw==
+  dependencies:
+    "@solidity-parser/parser" "^0.16.0"
+    ajv "^6.12.6"
+    antlr4 "^4.11.0"
+    ast-parents "^0.0.1"
+    chalk "^4.1.2"
+    commander "^11.1.0"
+    cosmiconfig "^8.0.0"
+    fast-diff "^1.2.0"
+    glob "^8.0.3"
+    ignore "^5.2.4"
+    js-yaml "^4.1.0"
+    lodash "^4.17.21"
+    pluralize "^8.0.0"
+    semver "^6.3.0"
+    strip-ansi "^6.0.1"
+    table "^6.8.1"
+    text-table "^0.2.0"
+  optionalDependencies:
+    prettier "^2.8.3"
+
+solhint-plugin-prettier@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/solhint-plugin-prettier/-/solhint-plugin-prettier-0.1.0.tgz#2f46999e26d6c6bc80281c22a7a21e381175bef7"
+  integrity sha512-SDOTSM6tZxZ6hamrzl3GUgzF77FM6jZplgL2plFBclj/OjKP8Z3eIPojKU73gRr0MvOS8ACZILn8a5g0VTz/Gw==
+  dependencies:
+    "@prettier/sync" "^0.3.0"
+    prettier-linter-helpers "^1.0.0"
+
 solhint@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/solhint/-/solhint-4.1.1.tgz#137c935ef028f01ba13687a1f237288d94dae1bf"
@@ -5263,6 +5325,11 @@ solhint@^4.1.1:
     text-table "^0.2.0"
   optionalDependencies:
     prettier "^2.8.3"
+
+solidity-comments-extractor@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/solidity-comments-extractor/-/solidity-comments-extractor-0.0.8.tgz#f6e148ab0c49f30c1abcbecb8b8df01ed8e879f8"
+  integrity sha512-htM7Vn6LhHreR+EglVMd2s+sZhcXAirB1Zlyrv5zBuTxieCvjfnRpd7iZk75m/u6NOlEyQ94C6TWbBn2cY7w8g==
 
 solidity-coverage@^0.8.6:
   version "0.8.6"
