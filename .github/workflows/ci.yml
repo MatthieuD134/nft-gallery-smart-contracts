@@ -36,7 +36,7 @@ jobs:
               id: slither
               continue-on-error: true
               with:
-                node-version: 16
+                node-version: 18
                 sarif: results.sarif
                 slither-args: --filter-paths node_modules
 
