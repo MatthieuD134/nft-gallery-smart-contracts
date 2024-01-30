@@ -16,7 +16,7 @@ contract GalleryNFT is ERC721A, Ownable {
     // mapping from each tokenId to a modelId
     mapping(uint256 => uint256) private _tokenModelId;
 
-    constructor(address _initialOwner) ERC721A("Gal,leryNFT", "GNFT") Ownable(_initialOwner) {}
+    constructor(address _initialOwner) ERC721A("GalleryNFT", "GNFT") Ownable(_initialOwner) {}
 
     /**
      * @dev A Method for owner to create a new NFT Model
@@ -73,13 +73,22 @@ contract GalleryNFT is ERC721A, Ownable {
     }
 
     /**
+     * @dev A method to get a specific model
+     * @param modelId The id of the model to get
+     */
+    function getModel(uint256 modelId) public view returns (Model memory) {
+        require(_modelExists(modelId), "Gallery: Model does not exist");
+        return _model[modelId];
+    }
+
+    /**
      * @dev A private method to check wether a specific model exists
      * @param modelId The id of the model being checked
      */
     function _modelExists(uint256 modelId) private view returns (bool) {
         return (modelId != 0 &&
-            _model[modelId].maxSupply == 0 &&
-            bytes(_model[modelId].uri).length == 0);
+            _model[modelId].maxSupply > 0 &&
+            bytes(_model[modelId].uri).length > 0);
     }
 
     /**
