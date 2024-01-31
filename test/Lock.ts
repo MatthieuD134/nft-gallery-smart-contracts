@@ -63,7 +63,7 @@ describe('Lock', () => {
         hre.viem.deployContract('Lock', [latestTime], {
           value: 1n,
         }),
-      ).to.be.rejectedWith('Unlock time should be in the future');
+      ).to.be.rejectedWith('Unlock time not in future');
     });
   });
 
