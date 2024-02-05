@@ -1,46 +1,46 @@
 name: Continuous Integration
 
 on:
-    push:
-        branches: [main]
-    pull_request:
+  push:
+    branches: [main]
+  pull_request:
 
 jobs:
-    build-n-test:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
+  build-n-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
-            - name: Install dependencies
-              run: yarn install
+      - name: Install dependencies
+        run: yarn install
 
-            - name: Compile smart contract
-              run: yarn compile
+      - name: Compile smart contract
+        run: yarn compile
 
-            - name: Run linting checks
-              run: yarn lint
+      - name: Run linting checks
+        run: yarn lint
 
-            - name: Run tests
-              run: yarn test
+      - name: Run tests
+        run: yarn coverage
 
-    code-analysis:
-        runs-on: ubuntu-latest
-        permissions:
-            contents: read
-            security-events: write
-        steps:
-            - uses: actions/checkout@v3
+  code-analysis:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v3
 
-            - name: Run static analysis with slither
-              uses: crytic/slither-action@v0.3.0
-              id: slither
-              continue-on-error: true
-              with:
-                node-version: 18
-                sarif: results.sarif
-                slither-args: --filter-paths node_modules
+      - name: Run static analysis with slither
+        uses: crytic/slither-action@v0.3.0
+        id: slither
+        continue-on-error: true
+        with:
+          node-version: 18
+          sarif: results.sarif
+          slither-args: --filter-paths node_modules
 
-            - name: Upload static analysis SARIF output file
-              uses: github/codeql-action/upload-sarif@v3
-              with:
-                sarif_file: ${{ steps.slither.outputs.sarif }}
+      - name: Upload static analysis SARIF output file
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ steps.slither.outputs.sarif }}
