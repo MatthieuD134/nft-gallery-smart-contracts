@@ -23,6 +23,9 @@ jobs:
       - name: Run tests
         run: yarn coverage
 
+      - name: Check coverage
+        run: yarn istanbul check-coverage ./coverage.json --statements 99 --branches 94 --functions 99 --lines 99
+
   code-analysis:
     runs-on: ubuntu-latest
     permissions:
