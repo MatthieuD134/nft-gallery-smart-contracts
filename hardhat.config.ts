@@ -1,11 +1,13 @@
 import { config as dotEnvConfig } from 'dotenv';
 import { HardhatUserConfig } from 'hardhat/config';
-import '@nomicfoundation/hardhat-toolbox-viem';
 import '@nomicfoundation/hardhat-verify';
 import '@nomicfoundation/hardhat-chai-matchers';
 import 'solidity-coverage';
 import 'hardhat-gas-reporter';
 import 'hardhat-contract-sizer';
+import '@nomicfoundation/hardhat-ethers';
+import '@nomicfoundation/hardhat-toolbox';
+import '@typechain/hardhat';
 
 dotEnvConfig();
 
