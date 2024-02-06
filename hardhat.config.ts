@@ -8,6 +8,7 @@ import 'hardhat-contract-sizer';
 import '@nomicfoundation/hardhat-ethers';
 import '@nomicfoundation/hardhat-toolbox';
 import '@typechain/hardhat';
+import './tasks';
 
 dotEnvConfig();
 
@@ -16,6 +17,7 @@ dotEnvConfig();
 // ------------------
 const PRIVATE_KEY = process.env.PRIVATE_KEY || null;
 const ALCHEMY_SEPOLIA_API_KEY = process.env.ALCHEMY_SEPOLIA_API_KEY || '';
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || '';
 // -------------------
 
 const config: HardhatUserConfig = {
@@ -53,6 +55,9 @@ const config: HardhatUserConfig = {
   contractSizer: {
     alphaSort: true,
     runOnCompile: true,
+  },
+  etherscan: {
+    apiKey: ETHERSCAN_API_KEY,
   },
 };
 
