@@ -201,7 +201,7 @@ describe('GalleryNFT', () => {
         const receipt = await tx.wait();
 
         assert(receipt);
-        const gasUsed = receipt.cumulativeGasUsed;
+        const gasUsed = receipt.cumulativeGasUsed * receipt.gasPrice;
 
         expect(await hre.ethers.provider.getBalance(owner)).to.be.eql(
           initialBalance - gasUsed + nftTemplate1.price,
