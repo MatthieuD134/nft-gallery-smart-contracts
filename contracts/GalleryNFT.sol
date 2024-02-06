@@ -8,8 +8,15 @@ contract GalleryNFT is ERC721A, Ownable {
     struct Model {
         uint256 maxSupply;
         uint256 supply;
+        uint256 price;
         string uri;
     }
+
+    error ModelAlreadyExists(uint256 id);
+    error ModelDoesNotExist(uint256 id);
+    error InsufficientSupply(uint256 modelId, uint256 currentSupply, uint256 amountRequested);
+    error InsufficientMsgValue(uint256 requiredValue, uint256 valueProvided);
+    error MintReentrancy();
 
     // mapping from model id to its corresponding model
     mapping(uint256 => Model) private _model;
@@ -27,10 +34,16 @@ contract GalleryNFT is ERC721A, Ownable {
     function setUpModel(
         uint256 modelId,
         uint256 modelMaxSupply,
+        uint256 price,
         string memory modelUri
     ) public onlyOwner {
-        require(_modelMissing(modelId), "Gallery: Model already exists");
-        _model[modelId] = Model({maxSupply: modelMaxSupply, supply: 0, uri: modelUri});
+        if (!_modelMissing(modelId)) revert ModelAlreadyExists(modelId);
+        _model[modelId] = Model({
+            maxSupply: modelMaxSupply,
+            supply: 0,
+            price: price,
+            uri: modelUri
+        });
     }
 
     /**
@@ -46,8 +59,12 @@ contract GalleryNFT is ERC721A, Ownable {
      * @param amount The amount to be minted
      */
     function mint(uint256 modelId, uint256 amount) public payable {
-        require(_modelExists(modelId), "Gallery: Model does not exist");
-        require(_modelHasSupply(modelId, amount), "Gallery: supply insufficient");
+        if (!_modelExists(modelId)) revert ModelDoesNotExist(modelId);
+        if (!_modelHasSupply(modelId, amount))
+            revert InsufficientSupply(modelId, _model[modelId].supply, amount);
+        if (msg.value < _model[modelId].price * amount)
+            revert InsufficientMsgValue(_model[modelId].price, msg.value);
+
         _safeMint(msg.sender, amount);
         // set the model id used for each token
         unchecked {
@@ -59,7 +76,7 @@ contract GalleryNFT is ERC721A, Ownable {
                 index++;
             } while (index < end);
             // Reentrancy protection.
-            if (_nextTokenId() != end) revert("Gallery: Mint Reentrancy");
+            if (_nextTokenId() != end) revert MintReentrancy();
         }
     }
 
@@ -78,7 +95,7 @@ contract GalleryNFT is ERC721A, Ownable {
      * @param modelId The id of the model to get
      */
     function getModel(uint256 modelId) public view returns (Model memory) {
-        require(_modelExists(modelId), "Gallery: Model does not exist");
+        if (!_modelExists(modelId)) revert ModelDoesNotExist(modelId);
         return _model[modelId];
     }
 
