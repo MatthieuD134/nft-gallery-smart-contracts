@@ -57,15 +57,16 @@ contract GalleryNFT is ERC721A, Ownable {
      * @dev A method to mint up to several NFTs from a single model
      * @param modelId The id of the model to be minted into an NFT
      * @param amount The amount to be minted
+     * @param to The address to receive the NFTs
      */
-    function mint(uint256 modelId, uint256 amount) public payable {
+    function mint(uint256 modelId, uint256 amount, address to) public payable {
         if (!_modelExists(modelId)) revert ModelDoesNotExist(modelId);
         if (!_modelHasSupply(modelId, amount))
             revert InsufficientSupply(modelId, _model[modelId].supply, amount);
         if (msg.value < _model[modelId].price * amount)
             revert InsufficientMsgValue(_model[modelId].price, msg.value);
 
-        _safeMint(msg.sender, amount);
+        _safeMint(to, amount);
         // set the model id used for each token
         unchecked {
             uint256 end = _nextTokenId();

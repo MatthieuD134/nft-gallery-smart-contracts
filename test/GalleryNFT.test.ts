@@ -4,7 +4,7 @@ import hre from 'hardhat';
 
 describe('GalleryNFT', () => {
   async function deployContractFixture() {
-    const [deployer, owner, buyer, random] = await hre.ethers.getSigners();
+    const [deployer, owner, buyer, nftReceiver, random] = await hre.ethers.getSigners();
     const galleryContractAsDeployer = await hre.ethers.deployContract(
       'GalleryNFT',
       [owner.address],
@@ -22,12 +22,14 @@ describe('GalleryNFT', () => {
       galleryContract,
       owner,
       buyer,
+      nftReceiver,
       random,
     };
   }
 
   async function setUpTemplateFixture() {
-    const { galleryContract, owner, buyer, random } = await loadFixture(deployContractFixture);
+    const { galleryContract, owner, buyer, nftReceiver, random } =
+      await loadFixture(deployContractFixture);
     const nftTemplate1 = {
       id: BigInt(1),
       maxSupply: BigInt(10),
@@ -49,7 +51,7 @@ describe('GalleryNFT', () => {
     );
     await tx.wait();
 
-    return { galleryContract, owner, buyer, random, nftTemplate1, nftTemplate2 };
+    return { galleryContract, owner, buyer, nftReceiver, random, nftTemplate1, nftTemplate2 };
   }
 
   describe('Deployment', () => {
@@ -123,21 +125,23 @@ describe('GalleryNFT', () => {
 
   describe('Mint NFT', () => {
     it('should allow users to buy NFT', async () => {
-      const { galleryContract, buyer, nftTemplate1 } = await loadFixture(setUpTemplateFixture);
+      const { galleryContract, buyer, nftReceiver, nftTemplate1 } =
+        await loadFixture(setUpTemplateFixture);
       const galleryContractForBuyer = await hre.ethers.getContractAt(
         'GalleryNFT',
         await galleryContract.getAddress(),
         buyer,
       );
 
-      const tx = await galleryContractForBuyer.mint(nftTemplate1.id, 1, {
+      const tx = await galleryContractForBuyer.mint(nftTemplate1.id, 1, nftReceiver.address, {
         value: nftTemplate1.price,
       });
       await tx.wait();
     });
 
     it("Should not allow user to mint if they don't send enough funds", async () => {
-      const { galleryContract, buyer, nftTemplate1 } = await loadFixture(setUpTemplateFixture);
+      const { galleryContract, buyer, nftReceiver, nftTemplate1 } =
+        await loadFixture(setUpTemplateFixture);
       const galleryContractForBuyer = await hre.ethers.getContractAt(
         'GalleryNFT',
         await galleryContract.getAddress(),
@@ -145,14 +149,15 @@ describe('GalleryNFT', () => {
       );
 
       await expect(
-        galleryContractForBuyer.mint(nftTemplate1.id, nftTemplate1.maxSupply, {
+        galleryContractForBuyer.mint(nftTemplate1.id, nftTemplate1.maxSupply, nftReceiver.address, {
           value: nftTemplate1.price * nftTemplate1.maxSupply - BigInt(1),
         }),
       ).to.be.revertedWithCustomError(galleryContractForBuyer, 'InsufficientMsgValue');
     });
 
     it('Should not allow user to mint using a model that does not exist', async () => {
-      const { galleryContract, buyer, nftTemplate1 } = await loadFixture(setUpTemplateFixture);
+      const { galleryContract, buyer, nftReceiver, nftTemplate1 } =
+        await loadFixture(setUpTemplateFixture);
       const galleryContractForBuyer = await hre.ethers.getContractAt(
         'GalleryNFT',
         await galleryContract.getAddress(),
@@ -160,14 +165,15 @@ describe('GalleryNFT', () => {
       );
 
       await expect(
-        galleryContractForBuyer.mint(2, nftTemplate1.maxSupply, {
+        galleryContractForBuyer.mint(2, nftTemplate1.maxSupply, nftReceiver.address, {
           value: nftTemplate1.price * nftTemplate1.maxSupply,
         }),
       ).to.be.revertedWithCustomError(galleryContractForBuyer, 'ModelDoesNotExist');
     });
 
     it('Should not allow user to mint if they want to mint more than the supply allows', async () => {
-      const { galleryContract, buyer, nftTemplate1 } = await loadFixture(setUpTemplateFixture);
+      const { galleryContract, buyer, nftReceiver, nftTemplate1 } =
+        await loadFixture(setUpTemplateFixture);
       const galleryContractForBuyer = await hre.ethers.getContractAt(
         'GalleryNFT',
         await galleryContract.getAddress(),
@@ -175,15 +181,20 @@ describe('GalleryNFT', () => {
       );
 
       await expect(
-        galleryContractForBuyer.mint(nftTemplate1.id, nftTemplate1.maxSupply + BigInt(1), {
-          value: nftTemplate1.price * (nftTemplate1.maxSupply + BigInt(1)),
-        }),
+        galleryContractForBuyer.mint(
+          nftTemplate1.id,
+          nftTemplate1.maxSupply + BigInt(1),
+          nftReceiver.address,
+          {
+            value: nftTemplate1.price * (nftTemplate1.maxSupply + BigInt(1)),
+          },
+        ),
       ).to.be.revertedWithCustomError(galleryContractForBuyer, 'InsufficientSupply');
     });
 
     describe('Withdrawal', () => {
       it('should allow owner to withdraw the funds after some NFTs have been minted', async () => {
-        const { galleryContract, owner, buyer, nftTemplate1 } =
+        const { galleryContract, owner, buyer, nftReceiver, nftTemplate1 } =
           await loadFixture(setUpTemplateFixture);
         const galleryContractForBuyer = await hre.ethers.getContractAt(
           'GalleryNFT',
@@ -191,7 +202,7 @@ describe('GalleryNFT', () => {
           buyer,
         );
 
-        const mintTx = await galleryContractForBuyer.mint(nftTemplate1.id, 1, {
+        const mintTx = await galleryContractForBuyer.mint(nftTemplate1.id, 1, nftReceiver.address, {
           value: nftTemplate1.price,
         });
         await mintTx.wait();
@@ -209,7 +220,7 @@ describe('GalleryNFT', () => {
       });
 
       it('should not allow non-=owner to withdraw the funds', async () => {
-        const { galleryContract, random, buyer, nftTemplate1 } =
+        const { galleryContract, random, buyer, nftReceiver, nftTemplate1 } =
           await loadFixture(setUpTemplateFixture);
         const galleryContractForBuyer = await hre.ethers.getContractAt(
           'GalleryNFT',
@@ -222,7 +233,7 @@ describe('GalleryNFT', () => {
           random,
         );
 
-        const mintTx = await galleryContractForBuyer.mint(nftTemplate1.id, 1, {
+        const mintTx = await galleryContractForBuyer.mint(nftTemplate1.id, 1, nftReceiver.address, {
           value: nftTemplate1.price,
         });
         await mintTx.wait();
@@ -244,14 +255,15 @@ describe('GalleryNFT', () => {
       });
 
       it('Should return the right tokenUri corresponding to the uri set in the model used to mint', async () => {
-        const { galleryContract, buyer, nftTemplate1 } = await loadFixture(setUpTemplateFixture);
+        const { galleryContract, buyer, nftReceiver, nftTemplate1 } =
+          await loadFixture(setUpTemplateFixture);
         const galleryContractForBuyer = await hre.ethers.getContractAt(
           'GalleryNFT',
           await galleryContract.getAddress(),
           buyer,
         );
 
-        const tx = await galleryContractForBuyer.mint(nftTemplate1.id, 1, {
+        const tx = await galleryContractForBuyer.mint(nftTemplate1.id, 1, nftReceiver.address, {
           value: nftTemplate1.price,
         });
         await tx.wait();
