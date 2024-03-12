@@ -48,6 +48,15 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
 
+      - name: Setup Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install
+
       - name: Run Slither
         uses: crytic/slither-action@v0.3.1
         id: slither
