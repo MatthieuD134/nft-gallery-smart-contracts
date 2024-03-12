@@ -34,9 +34,7 @@ const name = 'couverture alternative';
 const description =
   "Couverture d'un comic imaginaire. Posseder ce NFT debloque egalement l'acces au chapitre 1 du Tome 1 de 'Nom du comic'.";
 const attributes = [
-  { trait_type: 'Tome', value: 1, display_type: 'number' },
-  { trait_type: 'Chapitre', value: 1, display_type: 'number' },
-  { trait_type: 'Comic', value: 'Nom du Comic' },
+  { trait_type: 'Comic', value: 'Nom du comic #1' },
   { trait_type: 'Auteur', value: 'John Doe' },
 ];
 const externalUrl = 'http://localhost:3000';
