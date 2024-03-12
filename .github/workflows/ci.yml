@@ -45,16 +45,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Run static analysis with slither
+      - name: Run Slither
         uses: crytic/slither-action@v0.3.1
         id: slither
-        continue-on-error: true
         with:
-          node-version: 18
           sarif: results.sarif
-          slither-args: --filter-paths node_modules
+          fail-on: none
 
-      - name: Upload static analysis SARIF output file
+      - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: ${{ steps.slither.outputs.sarif }}
