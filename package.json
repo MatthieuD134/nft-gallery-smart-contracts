@@ -10,15 +10,16 @@
     "compile": "hardhat compile",
     "test": "hardhat test",
     "lint": "yarn eslint . & solhint 'contracts/**/*.sol'",
-    "coverage": "hardhat coverage"
+    "coverage": "hardhat coverage",
+    "generate-arweave-wallet": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/generate-arweave-wallet.ts",
+    "upload-file": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/upload-nft-to-arweave.ts"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-chai-matchers": "^2.0.3",
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.6",
     "@nomicfoundation/hardhat-ethers": "^3.0.5",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",
     "@nomicfoundation/hardhat-verify": "^2.0.3",
-    "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@openzeppelin/contracts": "^5.0.1",
     "@typechain/ethers-v6": "^0.5.1",
     "@typechain/hardhat": "^9.1.0",
@@ -28,6 +29,7 @@
     "@types/node": "^20.11.10",
     "@typescript-eslint/eslint-plugin": "^6.20.0",
     "@typescript-eslint/parser": "^6.20.0",
+    "arweave": "^1.14.4",
     "chai": "4",
     "dotenv": "^16.4.1",
     "erc721a": "^4.2.3",
@@ -39,7 +41,8 @@
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-react": "^7.33.2",
-    "ethers": "^6.10.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "ethers": "^6.11.1",
     "hardhat": "^2.19.4",
     "hardhat-contract-sizer": "^2.10.0",
     "hardhat-gas-reporter": "^1.0.9",
@@ -54,5 +57,9 @@
     "ts-node": "^10.9.2",
     "typechain": "^8.3.2",
     "typescript": "~5.0.4"
+  },
+  "packageManager": "yarn@4.1.1",
+  "dependencies": {
+    "@irys/sdk": "^0.1.16"
   }
 }

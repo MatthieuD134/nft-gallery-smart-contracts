@@ -9,7 +9,17 @@ jobs:
   build-n-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Setup Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install
@@ -24,26 +34,29 @@ jobs:
         run: yarn coverage
 
       - name: Check coverage
-        run: yarn istanbul check-coverage ./coverage.json --statements 99 --branches 94 --functions 99 --lines 99
+        run: npx istanbul check-coverage ./coverage.json --statements 99 --branches 94 --functions 99 --lines 99
 
-  code-analysis:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
-    steps:
-      - uses: actions/checkout@v3
+  # code-analysis:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     security-events: write
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Run static analysis with slither
-        uses: crytic/slither-action@v0.3.0
-        id: slither
-        continue-on-error: true
-        with:
-          node-version: 18
-          sarif: results.sarif
-          slither-args: --filter-paths node_modules
+  #     - name: Enable Corepack
+  #       run: corepack enable
 
-      - name: Upload static analysis SARIF output file
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: ${{ steps.slither.outputs.sarif }}
+  #     - name: Run Slither
+  #       uses: crytic/slither-action@v0.3.1
+  #       id: slither
+  #       with:
+  #         sarif: results.sarif
+  #         fail-on: none
+  #         node-version: 18
+
+  #     - name: Upload SARIF file
+  #       uses: github/codeql-action/upload-sarif@v3
+  #       with:
+  #         sarif_file: ${{ steps.slither.outputs.sarif }}

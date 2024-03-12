@@ -1,0 +1,21 @@
+{
+  "name": "NAME",
+  "description": "DESCRIPTION",
+  "image": "ar://<hash>",
+  "external_rl": "EXTERNAL_URL",
+  "attributes": [
+    {
+      "display_type": "number",
+      "trait_type": "Tome",
+      "value": 1
+    },
+    {
+      "trait_type": "Comic",
+      "value": "John l'histoire veritable"
+    },
+    {
+      "trait_type": "Auteur",
+      "value": "Fred Condette"
+    }
+  ]
+}
