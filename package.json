@@ -5,14 +5,14 @@
   "repository": "https://github.com/MatthieuD134/nft-gallery-smart-contracts",
   "author": "Matthieu Daulhiac <96766017+MatthieuD134@users.noreply.github.com>",
   "license": "MIT",
-  "type": "module",
   "scripts": {
     "prepare": "husky install",
     "compile": "hardhat compile",
     "test": "hardhat test",
     "lint": "yarn eslint . & solhint 'contracts/**/*.sol'",
     "coverage": "hardhat coverage",
-    "upload-files": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/upload-nft-to-arweave.ts"
+    "generate-arweave-wallet": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/generate-arweave-wallet.ts",
+    "upload-file": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/upload-nft-to-arweave.ts"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.6",

@@ -1,4 +1,5 @@
-import Arweave from 'arweave';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Arweave = require('arweave');
 
 function generateArweaveKey() {
   const arweave = Arweave.init({});
@@ -12,4 +13,4 @@ function generateArweaveKey() {
   });
 }
 
-export default generateArweaveKey;
+module.exports = generateArweaveKey;

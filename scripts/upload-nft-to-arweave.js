@@ -1,28 +1,29 @@
-import Irys from '@irys/sdk';
-import getArweaveKey from '../utils/get-arweave-key';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const Irys = require('@irys/sdk');
+const getArweaveKey = require('../utils/get-arweave-key.js');
 
-type AttributeType = 'number' | 'date';
+// type AttributeType = 'number' | 'date';
 
-interface IAttributeBase {
-  trait_type: string;
-  display_type?: AttributeType;
-}
+// interface IAttributeBase {
+//   trait_type: string;
+//   display_type?: AttributeType;
+// }
 
-interface INumberAttribute extends IAttributeBase {
-  display_type: 'number';
-  value: number;
-}
+// interface INumberAttribute extends IAttributeBase {
+//   display_type: 'number';
+//   value: number;
+// }
 
-interface IDateAttribute extends IAttributeBase {
-  display_type: 'date';
-  value: Date;
-}
+// interface IDateAttribute extends IAttributeBase {
+//   display_type: 'date';
+//   value: Date;
+// }
 
-interface IStringAttribute extends IAttributeBase {
-  value: string;
-}
+// interface IStringAttribute extends IAttributeBase {
+//   value: string;
+// }
 
-type IAttribute = INumberAttribute | IDateAttribute | IStringAttribute;
+// type IAttribute = INumberAttribute | IDateAttribute | IStringAttribute;
 
 // PARAMETERS -----------------
 
@@ -32,7 +33,7 @@ const imageFilePath =
 const name = 'couverture alternative';
 const description =
   "Couverture d'un comic imaginaire. Posseder ce NFT debloque egalement l'acces au chapitre 1 du Tome 1 de 'Nom du comic'.";
-const attributes: IAttribute[] = [
+const attributes = [
   { trait_type: 'Tome', value: 1, display_type: 'number' },
   { trait_type: 'Chapitre', value: 1, display_type: 'number' },
   { trait_type: 'Comic', value: 'Nom du Comic' },
@@ -72,7 +73,7 @@ const uploadImage = async () => {
   }
 };
 
-const uploadNFTMetadata = async (imageHash: string) => {
+const uploadNFTMetadata = async (imageHash) => {
   const metadata = {
     name,
     description,

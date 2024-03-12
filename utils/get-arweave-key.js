@@ -1,7 +1,8 @@
-import * as fs from 'fs';
-import { config as dotEnvConfig } from 'dotenv';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const fs = require('fs');
+const { config } = require('dotenv');
 
-dotEnvConfig();
+config();
 
 function getArweaveKey() {
   // get key from env variable, with dotenv
@@ -9,4 +10,4 @@ function getArweaveKey() {
   return key;
 }
 
-export default getArweaveKey;
+module.exports = getArweaveKey;
