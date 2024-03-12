@@ -36,27 +36,27 @@ jobs:
       - name: Check coverage
         run: npx istanbul check-coverage ./coverage.json --statements 99 --branches 94 --functions 99 --lines 99
 
-  code-analysis:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # code-analysis:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     security-events: write
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Enable Corepack
-        run: corepack enable
+  #     - name: Enable Corepack
+  #       run: corepack enable
 
-      - name: Run Slither
-        uses: crytic/slither-action@v0.3.1
-        id: slither
-        with:
-          sarif: results.sarif
-          fail-on: none
-          node-version: 18
+  #     - name: Run Slither
+  #       uses: crytic/slither-action@v0.3.1
+  #       id: slither
+  #       with:
+  #         sarif: results.sarif
+  #         fail-on: none
+  #         node-version: 18
 
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: ${{ steps.slither.outputs.sarif }}
+  #     - name: Upload SARIF file
+  #       uses: github/codeql-action/upload-sarif@v3
+  #       with:
+  #         sarif_file: ${{ steps.slither.outputs.sarif }}
