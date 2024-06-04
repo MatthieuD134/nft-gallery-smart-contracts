@@ -28,11 +28,11 @@ const getArweaveKey = require('../utils/get-arweave-key.js');
 // PARAMETERS -----------------
 
 const imageFilePath =
-  '/Users/matthieudaulhiac/Documents/Projects/NFT-Gallery/nft-gallery-smart-contracts/import/test.jpeg';
+  '/Users/matthieudaulhiac/Documents/Projects/NFT-Gallery/nft-gallery-smart-contracts/import/test2.jpeg';
 
-const name = 'couverture alternative';
+const name = 'couverture alternative 2';
 const description =
-  "Couverture d'un comic imaginaire. Posseder ce NFT debloque egalement l'acces au chapitre 1 du Tome 1 de 'Nom du comic'.";
+  "Couverture d'un comic imaginaire 2. Posseder ce NFT debloque egalement l'acces au chapitre 1 du Tome 1 de 'Nom du comic'.";
 const attributes = [
   { trait_type: 'Comic', value: 'Nom du comic #1' },
   { trait_type: 'Auteur', value: 'John Doe' },

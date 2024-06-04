@@ -30,8 +30,8 @@ const config: HardhatUserConfig = {
       url: `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : undefined,
     },
-    mumbai: {
-      url: `https://polygon-mumbai.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
+    polygonAmoy: {
+      url: `https://polygon-amoy.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : undefined,
     },
   },
@@ -62,6 +62,16 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: ETHERSCAN_API_KEY,
+    customChains: [
+      {
+        network: 'polygonAmoy',
+        chainId: 80002,
+        urls: {
+          apiURL: 'https://api-amoy.polygonscan.com/api',
+          browserURL: 'https://amoy.polygonscan.com',
+        },
+      },
+    ],
   },
   sourcify: {
     enabled: true,
