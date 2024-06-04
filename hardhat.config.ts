@@ -18,6 +18,7 @@ dotEnvConfig();
 const PRIVATE_KEY = process.env.PRIVATE_KEY || null;
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY || '';
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || '';
+const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY || '';
 // -------------------
 
 const config: HardhatUserConfig = {
@@ -32,6 +33,14 @@ const config: HardhatUserConfig = {
     },
     polygonAmoy: {
       url: `https://polygon-amoy.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : undefined,
+    },
+    mainnet: {
+      url: `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : undefined,
+    },
+    sepolia: {
+      url: `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : undefined,
     },
   },
@@ -61,7 +70,12 @@ const config: HardhatUserConfig = {
     runOnCompile: true,
   },
   etherscan: {
-    apiKey: ETHERSCAN_API_KEY,
+    apiKey: {
+      polygon: POLYGONSCAN_API_KEY,
+      mainnet: ETHERSCAN_API_KEY,
+      sepolia: ETHERSCAN_API_KEY,
+      polygonAmoy: POLYGONSCAN_API_KEY,
+    },
     customChains: [
       {
         network: 'polygonAmoy',
