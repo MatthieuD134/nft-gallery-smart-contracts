@@ -17,7 +17,8 @@ dotEnvConfig();
 // ------------------
 const PRIVATE_KEY = process.env.PRIVATE_KEY || null;
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY || '';
-const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || '';
+const ETHERSCAN_API_KEY_POLYGON = process.env.ETHERSCAN_API_KEY_POLYGON || '';
+const ETHERSCAN_API_KEY_OPTIMISM_SEPOLIA = process.env.ETHERSCAN_API_KEY_OPTIMISM_SEPOLIA || '';
 // -------------------
 
 const config: HardhatUserConfig = {
@@ -30,8 +31,8 @@ const config: HardhatUserConfig = {
       url: `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : undefined,
     },
-    polygonAmoy: {
-      url: `https://polygon-amoy.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
+    optimismSepolia: {
+      url: `https://opt-sepolia.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : undefined,
     },
   },
@@ -61,14 +62,17 @@ const config: HardhatUserConfig = {
     runOnCompile: true,
   },
   etherscan: {
-    apiKey: ETHERSCAN_API_KEY,
+    apiKey: {
+      polygon: ETHERSCAN_API_KEY_POLYGON,
+      optimismSepolia: ETHERSCAN_API_KEY_OPTIMISM_SEPOLIA,
+    },
     customChains: [
       {
-        network: 'polygonAmoy',
-        chainId: 80002,
+        network: 'optimismSepolia',
+        chainId: 11155420,
         urls: {
-          apiURL: 'https://api-amoy.polygonscan.com/api',
-          browserURL: 'https://amoy.polygonscan.com',
+          apiURL: 'https://sepolia-optimistic.etherscan.io/api',
+          browserURL: 'https://sepolia-optimistic.etherscan.io/',
         },
       },
     ],
