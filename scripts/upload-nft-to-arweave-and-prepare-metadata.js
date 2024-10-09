@@ -1,43 +1,20 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const Irys = require('@irys/sdk');
+const fs = require('fs');
+const path = require('path');
 const getArweaveKey = require('../utils/get-arweave-key.js');
 
-// type AttributeType = 'number' | 'date';
-
-// interface IAttributeBase {
-//   trait_type: string;
-//   display_type?: AttributeType;
-// }
-
-// interface INumberAttribute extends IAttributeBase {
-//   display_type: 'number';
-//   value: number;
-// }
-
-// interface IDateAttribute extends IAttributeBase {
-//   display_type: 'date';
-//   value: Date;
-// }
-
-// interface IStringAttribute extends IAttributeBase {
-//   value: string;
-// }
-
-// type IAttribute = INumberAttribute | IDateAttribute | IStringAttribute;
-
 // PARAMETERS -----------------
-
-const imageFilePath =
-  '/Users/matthieudaulhiac/Documents/Projects/NFT-Gallery/nft-gallery-smart-contracts/import/test2.jpeg';
-
-const name = 'couverture alternative 2';
-const description =
-  "Couverture d'un comic imaginaire 2. Posseder ce NFT debloque egalement l'acces au chapitre 1 du Tome 1 de 'Nom du comic'.";
-const attributes = [
-  { trait_type: 'Comic', value: 'Nom du comic #1' },
-  { trait_type: 'Auteur', value: 'John Doe' },
+const nfts = [
+  {
+    metadataPath: path.resolve(__dirname, '../import/metadata/1.json'),
+    imageFilePath: path.resolve(__dirname, '../import/images/1.jpeg'),
+  },
+  {
+    metadataPath: path.resolve(__dirname, '../import/metadata/2.json'),
+    imageFilePath: path.resolve(__dirname, '../import/images/2.jpeg'),
+  },
 ];
-const externalUrl = 'http://localhost:3000';
 
 const irysNode = 'https://node2.irys.xyz';
 
@@ -55,7 +32,7 @@ const getIrysArweave = async () => {
   return irys;
 };
 
-const uploadImage = async () => {
+const uploadImage = async (imageFilePath) => {
   const irys = await getIrysArweave();
 
   // Add a custom tag that tells the gateway how to serve this file to a browser
@@ -71,15 +48,7 @@ const uploadImage = async () => {
   }
 };
 
-const uploadNFTMetadata = async (imageHash) => {
-  const metadata = {
-    name,
-    description,
-    image: `ar://${imageHash}`,
-    attributes,
-    external_url: externalUrl,
-  };
-
+const uploadNFTMetadata = async (metadata) => {
   const irys = await getIrysArweave();
 
   // Add a custom tag that tells the gateway how to serve this file to a browser
@@ -95,11 +64,25 @@ const uploadNFTMetadata = async (imageHash) => {
   }
 };
 
-function main() {
-  uploadImage().then(async (imageHash) => {
-    await uploadNFTMetadata(imageHash);
-    console.log('Done');
-  });
+async function main() {
+  for (let i = 0; i < nfts.length; i = i + 1) {
+    const { metadataPath, imageFilePath } = nfts[i];
+
+    uploadImage(imageFilePath).then(async (imageHash) => {
+      // read metadata file and convert it to object
+      const metadata = JSON.parse(fs.readFileSync(metadataPath, { encoding: 'utf-8' }));
+
+      // replace image field in metadata with the hash of the uploaded image
+      const modifiedMetadata = {
+        ...metadata,
+        image: `ar://${imageHash}`,
+      };
+
+      await uploadNFTMetadata(modifiedMetadata);
+    });
+  }
+
+  console.log('Done');
 }
 
 main();
